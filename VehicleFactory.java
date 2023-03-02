@@ -5,6 +5,7 @@ public abstract class VehicleFactory {
 
   public abstract Luxury getLuxury();
   public abstract NonLuxury getNonLuxury();
+  public abstract SemiLuxury getSemiLuxury();
 
   public static VehicleFactory getVehicleFactory(String type) {
     if (type.equals(VehicleFactory.CAR))

@@ -6,6 +6,11 @@ public class SUVVehicleFactory extends VehicleFactory {
   public NonLuxurySUV getNonLuxury() {
     return new NonLuxurySUV("Non-Luxury-SUV");
   }
+
+  @Override
+  public SemiLuxury getSemiLuxury() {
+    return new SemiLuxurySUV("SemiLuxury-SUV");
+  }
 } // End of class
 
 

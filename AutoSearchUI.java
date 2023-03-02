@@ -3,17 +3,19 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class AutoSearchUI extends JFrame {
+
   public static final String newline = "\n";
   public static final String SEARCH = "Search";
   public static final String EXIT = "Exit";
   public static final String LUXURY = "Luxury";
   public static final String NON_LUXURY = "Non-Luxury";
+  public static final String SEMI_LUXURY = "Semi-Luxury";
 
 
   private JComboBox cmbVehicleCategory, cmbVehicleType;
 
   private JLabel lblVehicleCategory, lblVehicleType,
-  lblCarName, lblCarNameValue;
+      lblCarName, lblCarNameValue;
 
   public AutoSearchUI() {
     super("Abstract Factory - Example");
@@ -21,6 +23,7 @@ public class AutoSearchUI extends JFrame {
     cmbVehicleCategory = new JComboBox();
     cmbVehicleCategory.addItem(AutoSearchUI.LUXURY);
     cmbVehicleCategory.addItem(AutoSearchUI.NON_LUXURY);
+    cmbVehicleCategory.addItem(AutoSearchUI.SEMI_LUXURY);
 
     cmbVehicleType = new JComboBox();
     cmbVehicleType.addItem(VehicleFactory.CAR);
@@ -30,7 +33,7 @@ public class AutoSearchUI extends JFrame {
     lblVehicleType = new JLabel("VehicleType:");
     lblCarName = new JLabel("Search Result:");
     lblCarNameValue =
-      new JLabel(" Please click on Search button");
+        new JLabel(" Please click on Search button");
 
     //Create the open button
     JButton openButton = new JButton(AutoSearchUI.SEARCH);
@@ -38,7 +41,6 @@ public class AutoSearchUI extends JFrame {
     JButton exitButton = new JButton(AutoSearchUI.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
     ButtonHandler objButtonHandler = new ButtonHandler(this);
-
 
     openButton.addActionListener(objButtonHandler);
     exitButton.addActionListener(new ButtonHandler());
@@ -113,7 +115,7 @@ public class AutoSearchUI extends JFrame {
     try {
 //      UIManager.setLookAndFeel(new WindowsLookAndFeel());
       SwingUtilities.updateComponentTreeUI(
-        AutoSearchUI.this);
+          AutoSearchUI.this);
     } catch (Exception ex) {
       System.out.println(ex);
     }
@@ -124,31 +126,35 @@ public class AutoSearchUI extends JFrame {
     JFrame frame = new AutoSearchUI();
 
     frame.addWindowListener(new WindowAdapter() {
-          public void windowClosing(WindowEvent e) {
-            System.exit(0);
-          }
-        }
-                           );
+                              public void windowClosing(WindowEvent e) {
+                                System.exit(0);
+                              }
+                            }
+    );
 
     //frame.pack();
     frame.setSize(1050, 600);
     frame.setVisible(true);
   }
+
   public String getSelectedCategory() {
     return (String) cmbVehicleCategory.getSelectedItem();
   }
+
   public String getSelectedType() {
     return (String) cmbVehicleType.getSelectedItem();
   }
+
   public void setResult(String searchResult) {
     lblCarNameValue.setText(searchResult);
   }
 } // End of class AutoSearchUI
 
 
-
 class ButtonHandler implements ActionListener {
+
   AutoSearchUI objAutoSearchUI;
+
   public void actionPerformed(ActionEvent e) {
     String searchResult = null;
 
@@ -158,31 +164,38 @@ class ButtonHandler implements ActionListener {
     if (e.getActionCommand().equals(AutoSearchUI.SEARCH)) {
       //get input values
       String vhCategory =
-        objAutoSearchUI.getSelectedCategory();
+          objAutoSearchUI.getSelectedCategory();
       String vhType = objAutoSearchUI.getSelectedType();
 
       //get one of Luxury or NonLuxury vehicle factories
       VehicleFactory vf =
-        VehicleFactory.getVehicleFactory(vhType);
+          VehicleFactory.getVehicleFactory(vhType);
 
       if (vhCategory.equals(AutoSearchUI.LUXURY)) {
         Luxury c = vf.getLuxury();
         searchResult =
-          "Name: " + c.getLuxuryName() + "  Features: " +
-          c.getLuxuryFeatures();
+            "Name: " + c.getLuxuryName() + "  Features: " +
+                c.getLuxuryFeatures();
       }
       if (vhCategory.equals(AutoSearchUI.NON_LUXURY)) {
         NonLuxury s = vf.getNonLuxury();
         searchResult =
-          "Name: " + s.getNLName() + "  Features: " +
-          s.getNLFeatures();
+            "Name: " + s.getNLName() + "  Features: " +
+                s.getNLFeatures();
+      }
+      if (vhCategory.equals(AutoSearchUI.SEMI_LUXURY)) {
+        SemiLuxury sl = vf.getSemiLuxury();
+        searchResult =
+            "Name: " + sl.getSemiLuxuryNames() + " Features: " + sl.getSemiLuxuryFeatures();
       }
       objAutoSearchUI.setResult(searchResult);
     }
 
   }
+
   public ButtonHandler() {
   }
+
   public ButtonHandler(AutoSearchUI inObjAutoSearchUI) {
     objAutoSearchUI = inObjAutoSearchUI;
   }

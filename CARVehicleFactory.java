@@ -6,6 +6,11 @@ public class CARVehicleFactory extends VehicleFactory {
   public NonLuxuryCAR getNonLuxury() {
     return new NonLuxuryCAR("NonLuxuryL-Car");
   }
+
+  @Override
+  public SemiLuxury getSemiLuxury() {
+    return new SemiLuxuryCAR("SemiLuxury-Car");
+  }
 } // End of class
 
 
